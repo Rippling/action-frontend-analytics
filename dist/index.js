@@ -1555,19 +1555,21 @@ exports.debug = debug; // for test
 
 /***/ }),
 
-/***/ 258:
+/***/ 400:
 /***/ ((module) => {
 
-let wait = function (milliseconds) {
-  return new Promise((resolve) => {
-    if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
+const componentUsage = async function ({ pattern }) {
+  return {
+    pattern,
+    occurances: 150,
+    occurancesByDirectory: {
+      'apps': 50,
+      'hris': 20
     }
-    setTimeout(() => resolve("done!"), milliseconds)
-  });
+  }
 };
 
-module.exports = wait;
+module.exports = componentUsage;
 
 
 /***/ }),
@@ -1694,20 +1696,19 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(186);
-const wait = __nccwpck_require__(258);
+const componentUsage = __nccwpck_require__(400);
 
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+    const ft = core.getInput('flashboard_token');
+    core.info(`Starting the analytics....`);
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    const usages = await componentUsage({ pattern: /Common\/table\/components\/table/ });
 
-    core.setOutput('time', new Date().toTimeString());
+    core.setOutput('usages', usages);
+    core.info('End of analytics!');
   } catch (error) {
     core.setFailed(error.message);
   }
