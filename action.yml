@@ -1,13 +1,10 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Frontend Analytics'
+description: 'Gather the analytics from webapp repository'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  repo-token:
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  flashboard-token:
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'
