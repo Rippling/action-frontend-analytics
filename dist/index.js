@@ -1582,6 +1582,14 @@ module.exports = require("assert");
 
 /***/ }),
 
+/***/ 129:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");
+
+/***/ }),
+
 /***/ 614:
 /***/ ((module) => {
 
@@ -1695,6 +1703,7 @@ module.exports = require("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+const { exec } = __nccwpck_require__(129);
 const core = __nccwpck_require__(186);
 const componentUsage = __nccwpck_require__(400);
 
@@ -1706,6 +1715,17 @@ async function run() {
     core.info(`Starting the analytics....`);
 
     const usages = await componentUsage({ pattern: /Common\/table\/components\/table/ });
+
+    // grep -l -r "Common/table/components/table" app/modules/
+    exec('grep -l -r "Common/table/components/table" app/modules/', (err, stdout, stderr) => {
+      if (stderr || err) {
+        core.setFailed(stderr || err.message);
+        return;
+      }
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${stdout}`);
+      console.log(`stderr: ${stderr}`);
+    });
 
     core.info(`Usages: ${JSON.stringify(usages)}`);
     core.info('End of analytics!');
