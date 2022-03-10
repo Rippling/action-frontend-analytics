@@ -15,6 +15,7 @@ const componentUsage = async function ({ string }) {
       files = _(stdout)
         .split('\n')
         .map(item => _.split(item, 'app/modules/')[1])
+        .compact()
         .value();
 
       occurancesByDirectory = _.groupBy(files, item => _.split(item, '/')[0])
