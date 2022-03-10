@@ -10,7 +10,7 @@ const componentUsage = async function ({ string }) {
       return;
     }
 
-    files = _.split(stdout, '/n');
+    files = _.split(stdout, '\n');
     // the *entire* stdout and stderr (buffered)
     console.log(`stdout: ${JSON.stringify({files})}`);
   });
