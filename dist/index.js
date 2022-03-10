@@ -18780,26 +18780,28 @@ const core = __nccwpck_require__(186);
 const { exec } = __nccwpck_require__(129);
 
 const componentUsage = async function ({ string }) {
-  let files = [];
-  exec(`grep -l -r ${string} app/modules/`, (err, stdout, stderr) => {
-    if (stderr || err) {
-      core.setFailed(stderr || err.message);
-      return;
-    }
+  return new Promise((resolve, reject) => {
+    let files = [];
+    exec(`grep -l -r ${string} app/modules/`, (err, stdout, stderr) => {
+      if (stderr || err) {
+        core.setFailed(stderr || err.message);
+        return;
+      }
 
-    files = _.split(stdout, '\n');
-    // the *entire* stdout and stderr (buffered)
-    console.log(`stdout: ${JSON.stringify({files})}`);
+      files = _.split(stdout, '\n');
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${JSON.stringify({files})}`);
+    });
+
+    resolve({
+      string,
+      occurances: _.size(files),
+      occurancesByDirectory: {
+        'apps': 50,
+        'hris': 20
+      }
+    }); 
   });
-
-  return {
-    string,
-    occurances: _.size(files),
-    occurancesByDirectory: {
-      'apps': 50,
-      'hris': 20
-    }
-  }
 };
 
 module.exports = componentUsage;
