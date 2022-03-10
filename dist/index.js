@@ -1722,9 +1722,10 @@ async function run() {
         core.setFailed(stderr || err.message);
         return;
       }
+
+      const files = stdout.split('/n');
       // the *entire* stdout and stderr (buffered)
-      console.log(`stdout: ${stdout}`);
-      console.log(`stderr: ${stderr}`);
+      console.log(`stdout: ${JSON.stringify({files})}`);
     });
 
     core.info(`Usages: ${JSON.stringify(usages)}`);
