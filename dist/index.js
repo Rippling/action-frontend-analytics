@@ -18782,6 +18782,7 @@ const { exec } = __nccwpck_require__(129);
 const componentUsage = async function ({ string }) {
   return new Promise((resolve, reject) => {
     let files = [];
+    let occurancesByDirectory = {}
     exec(`grep -l -r ${string} app/modules/`, (err, stdout, stderr) => {
       if (stderr || err) {
         core.setFailed(stderr || err.message);
@@ -18791,14 +18792,15 @@ const componentUsage = async function ({ string }) {
       files = _(stdout)
         .split('\n')
         .map(item => _.split(item, 'app/modules/')[1])
-        .groupBy(item => _.split(item, '/')[0])
         .value();
+
+      occurancesByDirectory = _.groupBy(files, item => _.split(item, '/')[0])
       // the *entire* stdout and stderr (buffered)
       // console.log(`stdout: ${JSON.stringify({files})}`);
       resolve({
         string,
         occurances: _.size(files),
-        occurancesByDirectory: files
+        occurancesByDirectory: occurancesByDirectory,
       }); 
     });
   });
