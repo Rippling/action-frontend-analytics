@@ -18791,16 +18791,15 @@ const componentUsage = async function ({ string }) {
       files = _.split(stdout, '\n');
       // the *entire* stdout and stderr (buffered)
       console.log(`stdout: ${JSON.stringify({files})}`);
+      resolve({
+        string,
+        occurances: _.size(files),
+        occurancesByDirectory: {
+          'apps': 50,
+          'hris': 20
+        }
+      }); 
     });
-
-    resolve({
-      string,
-      occurances: _.size(files),
-      occurancesByDirectory: {
-        'apps': 50,
-        'hris': 20
-      }
-    }); 
   });
 };
 
