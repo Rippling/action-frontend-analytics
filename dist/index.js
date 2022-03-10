@@ -1707,7 +1707,7 @@ async function run() {
 
     const usages = await componentUsage({ pattern: /Common\/table\/components\/table/ });
 
-    core.setOutput('usages', usages);
+    core.info(`Usages: ${JSON.stringify(usages)}`);
     core.info('End of analytics!');
   } catch (error) {
     core.setFailed(error.message);
