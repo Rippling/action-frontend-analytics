@@ -12,7 +12,7 @@ const componentUsage = async function ({ string }) {
       }
 
       files = _(stdout)
-        .split('-')
+        .split('\n')
         .map(item => _.split(item, 'app/modules/')[1])
         .groupBy(item => _.split(item, '/')[0])
         .value();
