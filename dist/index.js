@@ -18788,16 +18788,17 @@ const componentUsage = async function ({ string }) {
         return;
       }
 
-      files = _.split(stdout, '\n');
+      files = _(stdout)
+        .split('-')
+        .map(item => _.split(item, 'app/modules/')[1])
+        .groupBy(item => _.split(item, '/')[0])
+        .value();
       // the *entire* stdout and stderr (buffered)
-      console.log(`stdout: ${JSON.stringify({files})}`);
+      // console.log(`stdout: ${JSON.stringify({files})}`);
       resolve({
         string,
         occurances: _.size(files),
-        occurancesByDirectory: {
-          'apps': 50,
-          'hris': 20
-        }
+        occurancesByDirectory: files
       }); 
     });
   });
