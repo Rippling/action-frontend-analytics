@@ -18779,7 +18779,7 @@ const _  = __nccwpck_require__(250);
 const core = __nccwpck_require__(186);
 const { exec } = __nccwpck_require__(129);
 
-const componentUsage = async function ({ identifier, string }) {
+const componentUsage = async function ({ string }) {
   return new Promise((resolve, reject) => {
     let files = [];
     let occurancesByDirectory = {}
@@ -18799,7 +18799,6 @@ const componentUsage = async function ({ identifier, string }) {
       // the *entire* stdout and stderr (buffered)
       // console.log(`stdout: ${JSON.stringify({files})}`);
       resolve({
-        identifier,
         string,
         occurances: _.size(files),
         occurancesByDirectory: occurancesByDirectory,
@@ -18962,11 +18961,17 @@ async function run() {
   try {
     const ft = core.getInput('flashboard-token');
     core.info(`Starting the analytics....`);
+
+    // Table usages
     const usages = await componentUsage({
-      identifier: 'TableUsage',
       string: 'Common/table/components/table',
     });
-    core.info(`Usages: ${JSON.stringify(usages)}`);
+
+    const data = {
+      TableUsage: usages,
+    }
+
+    core.info(`Analytics data: ${JSON.stringify(data)}`);
     core.info('End of analytics!');
   } catch (error) {
     core.setFailed(error.message);

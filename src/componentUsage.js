@@ -2,7 +2,7 @@ const _  = require('lodash');
 const core = require('@actions/core');
 const { exec } = require('child_process');
 
-const componentUsage = async function ({ identifier, string }) {
+const componentUsage = async function ({ string }) {
   return new Promise((resolve, reject) => {
     let files = [];
     let occurancesByDirectory = {}
@@ -22,7 +22,6 @@ const componentUsage = async function ({ identifier, string }) {
       // the *entire* stdout and stderr (buffered)
       // console.log(`stdout: ${JSON.stringify({files})}`);
       resolve({
-        identifier,
         string,
         occurances: _.size(files),
         occurancesByDirectory: occurancesByDirectory,
