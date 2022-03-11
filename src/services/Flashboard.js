@@ -1,7 +1,7 @@
 const axios = require('axios');
 const core = require('@actions/core');
 
-const flashboardToken = core.getInput('FE_FLASHBOARD_TOKEN');
+const flashboardToken = core.getInput('flashboard-token');
 
 // Set config defaults when creating the instance
 const FlashboardClient = axios.create({

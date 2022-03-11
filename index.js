@@ -18,7 +18,7 @@ async function run() {
     }];
 
     core.info(`Analytics data: ${JSON.stringify(feAnalyticsData, null, 2)}`);
-    core.info('Sending data to Flashboard...');
+    core.info('Sending data to Flashboard ....');
 
     await FlashboardService.postFeAnalytics(feAnalyticsData);
     core.info('End of analytics!');
